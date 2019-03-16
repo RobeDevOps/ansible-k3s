@@ -2,4 +2,5 @@
 - hosts: masters:slaves
   gather_facts: yes
   roles:
-    - etc_hosts
+    - etc_config
+    - container_features
