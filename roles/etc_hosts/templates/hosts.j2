@@ -10,5 +10,5 @@ ff02::2         ip6-allrouters
 {% endfor %}
 
 {% for slave in groups['slaves'] %}
-{{ hostvars[slave]['ansible_eth0']['ipv4']['address'] }}  {{slave}}
+ {{slave}}
 {% endfor %}
