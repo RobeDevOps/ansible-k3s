@@ -11,7 +11,10 @@
   when: cpuset_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
 
 - name: Adding cpuset to cmdline
-  shell: "{{ cmdline_cpuset }} | tee /boot/cmdline.txt"
+  debug:
+    msg: "{{cmdline_cpuset}}"
+#   shell: "{{ cmdline_cpuset }} | tee /boot/cmdline.txt"
+  
 
 
 # - name: Verify memory is enable
