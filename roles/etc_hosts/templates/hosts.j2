@@ -8,6 +8,3 @@ ff02::2         ip6-allrouters
 {% for node in groups['master'] %}
 file 1
 {% endfor %}}
-# {% for node in groups['slaves'] %}
-# {{ hostvars[node]['ansible_all_ipv4_addresses'] }}  {{node}}
-# {% endfor %}}
