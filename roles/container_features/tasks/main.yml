@@ -1,8 +1,18 @@
 ---
-- name: Verify cgroup_enable is available
-  shell: cat /boot/cmdline.txt | grep "cgroup_enable"
-  register: cgroup_result
+- name: Verify cpuset is enable
+  shell: cat /boot/cmdline.txt | grep "cgroup_enable=cpuset"
+  ignore_errors: yes
+  register: cpuset_result
 
-- name: See cgroup_enable result
-  debug:
-    msg: "See result {{ cgroup_result }}"
+- name: Enable cpuset 
+  shell: echo "cgroup_enable=cpuset" >> /boot/cmdline.txt
+  when: cpuset_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
+
+- name: Verify memory is enable
+  shell: cat /boot/cmdline.txt | grep "cgroup_enable=memory"
+  ignore_errors: yes
+  register: memory_result
+
+- name: Add cgroup_enable 
+  shell: echo "cgroup_enable=memory" >> /boot/cmdline.txt
+  when: memory_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
