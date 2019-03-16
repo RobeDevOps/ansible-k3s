@@ -3,4 +3,6 @@
   tasks:
     - name: configure hosts
       command: echo "Connected to {{ item }}"
-      with_items: "{{ groups['master'] }}"
+      with_items: "{{ groups['cluster-nodes'] }}"
+
+      
