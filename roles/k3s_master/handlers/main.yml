@@ -2,7 +2,7 @@
 - name: k3s.service
   systemd:
     name: k3s
-    state: restarted
+    state: started
     daemon_reload: yes
     enabled: yes
   
