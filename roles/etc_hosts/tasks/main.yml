@@ -1,4 +1,10 @@
 ---
+- name: Configure /etc/hostname
+  become: True
+  debug: 
+    msg: "New name is {{inventory_hostname}}"
+
+
 # tasks file for common
 - name: Configure /etc/hosts
   become: True
