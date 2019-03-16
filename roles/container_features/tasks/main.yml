@@ -5,7 +5,8 @@
   register: cpuset_result
 
 - name: Creating new cmdline with cpuset 
-  command: "$(head -n1 /boot/cmdline.txt) cgroup_enable=cpuset"
+  shell: >
+    echo "$(head -n1 /boot/cmdline.txt) cgroup_enable=cpuset"
   register: cmdline_cpuset
   when: cpuset_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
 
