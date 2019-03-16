@@ -1,5 +1,8 @@
 ---
-- name: Configuring /boot/cmdline.txt 
-  template: 
-    src: cmdline.txt.j2
-    dest: /boot/cmdline.txt
+- name: Verify cgroup_enable is available
+  shell: cat /boot/cmdline.txt | grep "cgroup_enable"
+  register: cgroup_result
+
+- name: See cgroup_enable result
+  debug:
+    msg: "See result {{ cgroup_result }}"
