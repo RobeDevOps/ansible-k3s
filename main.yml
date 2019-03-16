@@ -6,3 +6,4 @@
     - etc_config
     - container_features
     - dphys_swapfile
+    - bootstrap
