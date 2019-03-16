@@ -5,3 +5,8 @@
     - etc_config
     - container_features
     - dphys-swapfile
+
+  tasks:
+      become: True
+    - name: Reboot Pi
+      reboot
