@@ -1,7 +1,4 @@
 ---
 - hosts: master
-  tasks:
-    - name: configure hosts
-      command: echo "Connected to {{ item }}"
-      with_items: "{{ groups['cluster-nodes'] }}"
-
+  roles:
+    - etc_hosts

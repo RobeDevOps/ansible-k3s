@@ -1,2 +1,6 @@
 ---
 # tasks file for common
+- name: Configure /etc/hosts
+  template: 
+    src: hosts.j2
+    dest: /etc/hosts-backup
