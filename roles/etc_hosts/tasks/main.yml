@@ -4,11 +4,9 @@
   template: 
     src: hostname.j2
     dest: /etc/hostname
-  notify: Reboot Pi
 
 - name: Configure /etc/hosts
   become: True
   template: 
     src: hosts.j2
     dest: /etc/hosts
-  notify: Reboot Pi
