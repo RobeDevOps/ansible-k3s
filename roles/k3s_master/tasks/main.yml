@@ -5,3 +5,8 @@
     dest: /lib/systemd/system/k3s.service
   notify: k3s.service
 
+- name: k3s.service
+  systemd:
+    name: k3s
+    state: started
+
