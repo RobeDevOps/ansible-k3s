@@ -7,6 +7,6 @@
     - dphys-swapfile
 
   tasks:
-      become: True
     - name: Reboot Pi
+      become: True
       reboot
