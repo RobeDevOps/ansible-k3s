@@ -1,5 +1,6 @@
 ---
 - name: Disable dphys-swapfile
+  become: True
   systemd:
     name: dphys-swapfile
     state: stopped
