@@ -7,3 +7,9 @@
     - container_features
     - dphys_swapfile
     - bootstrap_k3s
+
+- hosts: masters
+  gather_facts: yes
+  become: yes
+  roles:
+    - k3s_master

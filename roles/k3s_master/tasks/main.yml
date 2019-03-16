@@ -1,0 +1,7 @@
+---
+- name: Create systemd service for master
+  template:
+    src: k3s.service.j2
+    dest: /lib/systemd/system/k3s.service
+  notify: k3s.service
+
