@@ -4,5 +4,5 @@
     name: k3s
     state: restarted
     daemon_reload: yes
-    enable: yes
+    enabled: yes
   
