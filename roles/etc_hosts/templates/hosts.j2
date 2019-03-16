@@ -10,5 +10,5 @@ ff02::2         ip6-allrouters
 {% endfor %}
 
 {% for slave in groups['slaves'] %}
- {{slave}}
+{{ hostvars[slave] }}
 {% endfor %}
