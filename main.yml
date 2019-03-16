@@ -9,4 +9,4 @@
   tasks:
     - name: Reboot Pi
       become: True
-      reboot
+      reboot:
