@@ -1,8 +1,0 @@
----
-# Only run "update_cache=yes" if the last one is more than 3600 seconds ago
-# Solution to issue: 'kernel: random: crng init done'
-- name: Install rng-tools5
-  apt:
-    name: rng-tools5
-    update_cache: yes
-    cache_valid_time: 3600
