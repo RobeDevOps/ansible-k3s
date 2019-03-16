@@ -13,7 +13,7 @@
 - name: Adding cpuset to cmdline
 #   debug:
     # msg: "{{cmdline_cpuset}}"
-  shell: "echo {{ cmdline_cpuset.stdout }} | tee /boot/cmdline.txt"
+  shell: echo "{{ cmdline_cpuset.stdout }}" | tee /boot/cmdline.txt
   
 
 
