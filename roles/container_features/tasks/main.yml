@@ -4,15 +4,20 @@
   ignore_errors: yes
   register: cpuset_result
 
-- name: Enable cpuset 
-  shell: echo "cgroup_enable=cpuset" >> /boot/cmdline.txt
+- name: Creating new cmdline with cpuset 
+  shell: "$(head -n1 /boot/cmdline.txt) cgroup_enable=cpuset"
+  register: cmdline_cpuset
   when: cpuset_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
 
-- name: Verify memory is enable
-  shell: cat /boot/cmdline.txt | grep "cgroup_enable=memory"
-  ignore_errors: yes
-  register: memory_result
+- name: Adding cpuset to cmdline
+  shell: "{{ cmdline_cpuset.stdout }} | tee /boot/cmdline.txt"
 
-- name: Add cgroup_enable 
-  shell: echo "cgroup_enable=memory" >> /boot/cmdline.txt
-  when: memory_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
+
+# - name: Verify memory is enable
+#   shell: cat /boot/cmdline.txt | grep "cgroup_enable=memory"
+#   ignore_errors: yes
+#   register: memory_result
+
+# - name: Add cgroup_enable 
+#   shell: echo "cgroup_enable=memory" >> /boot/cmdline.txt
+#   when: memory_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
