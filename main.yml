@@ -1,5 +1,6 @@
 ---
-- hosts: master:slaves
+- hosts: master
   tasks:
-    - name: get the list
-      command: echo "Connected to {{ ansible_hostname }}"
+    - name: configure hosts
+      command: echo "Connected to {{ item }}"
+      with_items: groups['master']
