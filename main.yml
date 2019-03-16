@@ -2,7 +2,6 @@
 - hosts: master
   tasks:
     - name: configure hosts
-      command: echo "Connected to {{ item }}"
+      command: echo "Connected to {{ hostvars[item]['ansible_hostname'] }}"
       with_items: "{{ groups['cluster-nodes'] }}"
 
-      
