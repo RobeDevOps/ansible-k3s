@@ -1,5 +1,5 @@
 ---
-- hosts: k3s-master:k3s-slaves
+- hosts: k3s-master:k3s-slave
   tasks:
     - name: get the list
       command: echo "Connected to ${hostname}"
