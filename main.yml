@@ -4,9 +4,9 @@
   become: yes
   roles:
     - etc_config
-    - container_features
-    - apt_packages
-    - dphys_swapfile
+    # - container_features
+    # - apt_packages
+    # - dphys_swapfile
 
 #   tasks:
 #     - name: Reboot Pi
