@@ -34,15 +34,15 @@
 - name: Verify cgroup_memory=1 is enable
   shell: cat /boot/cmdline.txt | grep "cgroup_memory=1"
   ignore_errors: yes
-  register: memory_1_result
+  register: memory_one_result
 
 - name: Creating new cmdline with cgroup_memory=1 
   shell: >
     echo "$(head -n1 /boot/cmdline.txt) cgroup_memory=1"
-  register: cmdline_memory_1
+  register: cmdline_memory_one
   when: memory_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
 
 - name: Adding cgroup_memory=1 to cmdline
-  shell: echo "{{ cmdline_memory_1.stdout }}" | tee /boot/cmdline.txt
-  when: memory_1_result.rc == 1
+  shell: echo "{{ cmdline_memory_one.stdout }}" | tee /boot/cmdline.txt
+  when: memory_one_result.rc == 1
   notify: Reboot Pi
