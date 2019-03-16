@@ -2,7 +2,7 @@
 - name: Configure /etc/hostname
   become: True
   template: 
-    src: hosts.j2
+    src: hostname.j2
     dest: /etc/hostname
 
 # tasks file for common
