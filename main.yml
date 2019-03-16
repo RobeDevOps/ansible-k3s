@@ -1,5 +1,5 @@
 ---
-- hosts: masters
+- hosts: masters:slaves
   gather_facts: yes
   roles:
     - etc_hosts
