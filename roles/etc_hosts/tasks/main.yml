@@ -4,7 +4,6 @@
   debug: 
     msg: "New name is {{inventory_hostname}}"
 
-
 # tasks file for common
 - name: Configure /etc/hosts
   become: True
