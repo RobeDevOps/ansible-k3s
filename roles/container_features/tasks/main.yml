@@ -1,6 +1,5 @@
 ---
 - name: Configuring /boot/cmdline.txt 
-  become: True
   template: 
     src: cmdline.txt.j2
     dest: /boot/cmdline.txt

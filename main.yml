@@ -1,10 +1,12 @@
 ---
 - hosts: masters:slaves
   gather_facts: yes
+  becomre: True
   roles:
     - etc_config
     - container_features
-    - dphys-swapfile
+    - apt_packages
+    - dphys_swapfile
 
 #   tasks:
 #     - name: Reboot Pi
