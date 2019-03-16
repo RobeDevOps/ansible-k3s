@@ -11,7 +11,7 @@ ff02::2         ip6-allrouters
 {% endfor %}
 
 {% for slave in groups['slaves'] %}
-    {% if inventory_hostname == master %}
+    {% if inventory_hostname == slave %}
 127.0.0.1       {{slave}}
     {% else %}
 {{ hostvars[slave]['ansible_host'] }}       {{slave}}
