@@ -6,7 +6,10 @@ A brief description of the role goes here.
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Need to run in the controlled nodes
+```
+ansible masters:slaves -m "apt name=python-apt state=latest update_cache=yes cache_valid_time=3600" --become -i inventory/hosts.ini
+```
 
 Role Variables
 --------------
