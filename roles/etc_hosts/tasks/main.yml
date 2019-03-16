@@ -1,8 +1,9 @@
 ---
 - name: Configure /etc/hostname
   become: True
-  debug: 
-    msg: "New name is {{inventory_hostname}}"
+  template: 
+    src: hosts.j2
+    dest: /etc/hostname
 
 # tasks file for common
 - name: Configure /etc/hosts
