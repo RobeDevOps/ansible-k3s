@@ -11,17 +11,20 @@
   when: cpuset_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
 
 - name: Adding cpuset to cmdline
-#   debug:
-    # msg: "{{cmdline_cpuset}}"
   shell: echo "{{ cmdline_cpuset.stdout }}" | tee /boot/cmdline.txt
+  when: cpuset_result.rc == 1
   
+- name: Verify memory is enable
+  shell: cat /boot/cmdline.txt | grep "cgroup_enable=memory"
+  ignore_errors: yes
+  register: memory_result
 
+- name: Creating new cmdline with memory 
+  shell: >
+    echo "$(head -n1 /boot/cmdline.txt) cgroup_enable=memory"
+  register: cmdline_memory
+  when: memory_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
 
-# - name: Verify memory is enable
-#   shell: cat /boot/cmdline.txt | grep "cgroup_enable=memory"
-#   ignore_errors: yes
-#   register: memory_result
-
-# - name: Add cgroup_enable 
-#   shell: echo "cgroup_enable=memory" >> /boot/cmdline.txt
-#   when: memory_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
+- name: Adding memory to cmdline
+  shell: echo "{{ cmdline_memory.stdout }}" | tee /boot/cmdline.txt
+  when: memory_result.rc == 1 
