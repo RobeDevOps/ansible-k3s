@@ -4,3 +4,4 @@
   roles:
     - etc_config
     - container_features
+    - dphys-swapfile
