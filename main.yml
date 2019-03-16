@@ -4,7 +4,7 @@
   become: yes
   roles:
     - etc_config
-    # - container_features
+    - container_features
     # - apt_packages
     # - dphys_swapfile
 
