@@ -5,9 +5,10 @@ ff02::2         ip6-allrouters
 
 127.0.0.1       raspberrypi
 
-{% for node in groups['master'] %}
-{{ hostvars[node]['ansible_eth0']['ipv4']['address'] }}  {{node}}
+{% for master in groups['master'] %}
+{{ hostvars[master]['ansible_eth0']['ipv4']['address'] }}  {{master}}
 {% endfor %}
-{% for node in groups['slaves'] %}
-{{ hostvars[node]['ansible_eth0']['ipv4']['address'] }}  {{node}}
+
+{% for slave in groups['slaves'] %}
+{{ hostvars[slave]['ansible_eth0']['ipv4']['address'] }}  {{slave}}
 {% endfor %}
