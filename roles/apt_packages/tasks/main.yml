@@ -7,8 +7,8 @@
     update_cache: yes
     cache_valid_time: 3600
   
-- name: Run and enable haveged
+- name: Run and enable rng-tools5
   systemd:
-    name: haveged
+    name: rng-tools5
     state: started
     enabled: yes
