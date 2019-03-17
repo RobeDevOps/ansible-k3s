@@ -5,8 +5,9 @@
     chdir: /etc/rancher/k3s/
     creates: /etc/rancher/k3s/k3s.yaml.backup1 
 
-- lineinfile:
-    path: /etc/selinux/config
-    regexp: '^localhost='
+- name: Replace localhost by server name 
+  lineinfile:
+    path: /etc/rancher/k3s/k3s.yaml
+    regexp: 'localhost'
     line: 'server: https://{{inventory_hostname}}:6443'
-    notify: k3s.service
+  notify: k3s.service
