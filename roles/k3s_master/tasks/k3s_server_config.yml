@@ -1,9 +1,9 @@
 ---
 - name: Create backup copy of default configuration
-  command: 
+  command: cp k3s.yaml k3s.yaml.backup1 
+  args:
     chdir: /etc/rancher/k3s/
     creates: /etc/rancher/k3s/k3s.yaml.backup1 
-    cp: k3s.yaml k3s.yaml.backup1
 
 - lineinfile:
     path: /etc/selinux/config
