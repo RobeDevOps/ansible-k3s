@@ -1,8 +1,9 @@
 ---
 - name: Create backup copy of default configuration
-  copy:
-    src: /etc/rancher/k3s/k3s.yaml
-    dest: /etc/rancher/k3s/k3s.yaml.backup  
+  command: cp k3s.yaml k3s.yaml.backup
+  args:
+    chdir: /etc/rancher/k3s/
+    creates: /etc/rancher/k3s/k3s.yaml.backup
 
 - name: Replace localhost by server name 
   lineinfile:
