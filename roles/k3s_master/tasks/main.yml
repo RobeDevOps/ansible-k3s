@@ -9,4 +9,5 @@
   systemd:
     name: k3s
     state: started
+    enabled: yes
 
