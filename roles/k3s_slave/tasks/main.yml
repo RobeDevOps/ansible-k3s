@@ -1,5 +1,19 @@
 ---
 - name: Join node {{inventory_hostname}}({{ansible_host}}) to cluster 
-  debug: 
-    msg: "sudo -E k3s agent -s k3s-master:6443 --cluster-secret {{cluster_secret}}"
+  shell: >
+    sudo -E k3s agent -s k3s-master:6443 --cluster-secret {{cluster_secret}}
+  with_items: "{{ groups['slave']}}"
+
+- name: Get joined slaves
+  shell: >
+    "k3s kubectl get node"
+  register: node_list
+
+- name: Check node list is complete
+  shell: >
+    echo "slave {{item}} is joined to cluster"
+  with_items: "{{ groups['slaves']}}"
+  when: node_list.stdout.find {{item}}
+
+
 
