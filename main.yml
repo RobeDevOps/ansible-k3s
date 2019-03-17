@@ -18,4 +18,4 @@
   gather_facts: yes
   become: yes
   roles:
-    - k3s_slave
+    - { role: k3s_slave, tags: ['slave'] }
