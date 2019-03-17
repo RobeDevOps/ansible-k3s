@@ -2,10 +2,7 @@
 - name: Create backup copy of default configuration
   copy:
     src: /etc/rancher/k3s/k3s.yaml
-    dest: /etc/rancher/k3s/k3s.yaml.backup
-
-- name: Change file permission
-  
+    dest: /etc/rancher/k3s/k3s.yaml.backup  
 
 - name: Replace localhost by server name 
   lineinfile:
