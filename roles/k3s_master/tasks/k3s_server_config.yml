@@ -10,5 +10,5 @@
     path: /etc/rancher/k3s/k3s.yaml
     regexp: 'localhost'
     line: 'server: https://{{inventory_hostname}}:6443'
-    mode: 0644
+    mode: 0666
   notify: k3s.service
