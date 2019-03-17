@@ -1,13 +1,16 @@
 ---
 - name: Create backup copy of default configuration
-  command: cp k3s.yaml k3s.yaml.backup1 
-  args:
-    chdir: /etc/rancher/k3s/
-    creates: /etc/rancher/k3s/k3s.yaml.backup1 
+  copy:
+    src: /etc/rancher/k3s/k3s.yaml
+    dest: /etc/rancher/k3s/k3s.yaml.backup
+
+- name: Change file permission
+  
 
 - name: Replace localhost by server name 
   lineinfile:
     path: /etc/rancher/k3s/k3s.yaml
     regexp: 'localhost'
     line: 'server: https://{{inventory_hostname}}:6443'
+    mode: 0644
   notify: k3s.service
