@@ -1,4 +1,12 @@
 ---
-- name: Join node to cluster 
-  shell: >
-    k3s agent --server https://k3s-master:6443 --cluster-secret {{cluster_secret}} >/dev/null 2>&1 &
+- name: Create systemd service for agent
+  template:
+    src: k3s_agent.service.j2
+    dest: /lib/systemd/system/k3s_agent.service
+  notify: k3s_agent.service
+
+- name: k3s agent service
+  systemd:
+    name: k3s_agent
+    state: started
+    enabled: yes

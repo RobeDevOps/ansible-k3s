@@ -1,0 +1,7 @@
+---
+- name: k3s_agent.service
+  systemd:
+    name: k3s_agent
+    state: restarted
+    daemon_reload: yes
+  
