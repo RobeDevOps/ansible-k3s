@@ -1,3 +1,3 @@
 ---
-include_task: k3s_server_config.yml
-include_task: k3s_service.yml
+include_tasks: k3s_server_config.yml
+include_tasks: k3s_service.yml
