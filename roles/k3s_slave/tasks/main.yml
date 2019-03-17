@@ -1,0 +1,5 @@
+---
+- name: Create systemd service for master
+  debug: 
+    msg: "sudo -E k3s agent -s k3s-master --cluster-secret {{cluster_secret}}"
+
