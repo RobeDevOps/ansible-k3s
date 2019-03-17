@@ -2,7 +2,6 @@
 - name: Join node {{inventory_hostname}}({{ansible_host}}) to cluster 
   shell: >
     k3s agent --server k3s-master:6443 --cluster-secret {{cluster_secret}}
-  with_items: "{{ groups['slave']}}"
 
 - name: Get joined slaves
   shell: >
