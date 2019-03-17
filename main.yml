@@ -12,7 +12,7 @@
   gather_facts: yes
   become: yes
   roles:
-    - k3s_master 
+    - { role: k3s_master, tags: ['master'] } 
 
 - hosts: slave
   gather_facts: yes
