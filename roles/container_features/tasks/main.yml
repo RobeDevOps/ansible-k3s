@@ -8,11 +8,11 @@
   shell: >
     echo "$(head -n1 /boot/cmdline.txt) cgroup_enable=cpuset"
   register: cmdline_cpuset
-  when: cpuset_result.rc == 1  # meaning: the grep failed and there is no cgroup_enable 
+  when: cpuset_result.rc is defined and cpuset_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
 
 - name: Adding cgroup_enable=cpuset to cmdline.txt
   shell: echo "{{ cmdline_cpuset.stdout }}" | tee /boot/cmdline.txt
-  when: cpuset_result.rc == 1
+  when: cpuset_result.rc is defined and cpuset_result.rc == 1
   notify: Reboot Pi
   
 - name: Verify cgroup_enable=memory is enable
@@ -24,11 +24,11 @@
   shell: >
     echo "$(head -n1 /boot/cmdline.txt) cgroup_enable=memory"
   register: cmdline_memory
-  when: memory_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
+  when: memory_result.rc is defined and memory_result.rc == 1  # meaning: the grep failed and there is no cgroup_enable 
 
 - name: Adding cgroup_enable=memory to cmdline
   shell: echo "{{ cmdline_memory.stdout }}" | tee /boot/cmdline.txt
-  when: memory_result.rc == 1
+  when: memory_result.rc is defined and memory_result.rc == 1
   notify: Reboot Pi
 
 - name: Verify cgroup_memory=1 is enable
@@ -40,9 +40,9 @@
   shell: >
     echo "$(head -n1 /boot/cmdline.txt) cgroup_memory=1"
   register: cmdline_memory_one
-  when: memory_one_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
+  when: memory_one_result.rc is defined and memory_one_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
 
 - name: Adding cgroup_memory=1 to cmdline
   shell: echo "{{ cmdline_memory_one.stdout }}" | tee /boot/cmdline.txt
-  when: memory_one_result.rc == 1
+  when: memory_one_result.rc is defined and memory_one_result.rc == 1
   notify: Reboot Pi
