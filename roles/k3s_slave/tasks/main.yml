@@ -1,4 +1,4 @@
 ---
 - name: Join node to cluster 
   shell: >
-    k3s agent --server https://k3s-master:6443 --cluster-secret {{cluster_secret}} &
+    sudo k3s agent --server https://k3s-master:6443 --cluster-secret {{cluster_secret}} &
