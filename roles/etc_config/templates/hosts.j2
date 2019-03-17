@@ -2,7 +2,7 @@
 ::1             localhost ip6-localhost ip6-loopback
 ff02::1         ip6-allnodes
 ff02::2         ip6-allrouters
-{% for master in groups['masters'] %}
+{% for master in groups['master'] %}
 {% if inventory_hostname == master %}
 127.0.0.1       {{master}}
 {% else %}
@@ -10,7 +10,7 @@ ff02::2         ip6-allrouters
 {% endif %}
 {% endfor %}
 
-{% for slave in groups['slaves'] %}
+{% for slave in groups['slave'] %}
 {% if inventory_hostname == slave %}
 127.0.0.1       {{slave}}
 {% else %}
