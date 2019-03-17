@@ -1,5 +1,5 @@
 ---
-- hosts: masters:slaves
+- hosts: master:slave
   gather_facts: yes
   become: yes
   roles:
@@ -8,8 +8,14 @@
     - dphys_swapfile
     - bootstrap_k3s
 
-- hosts: masters
+- hosts: master
   gather_facts: yes
   become: yes
   roles:
-    - { role: k3s_master, tags: ['master'] }
+    - k3s_master 
+
+- hosts: slave
+  gather_facts: yes
+  become: yes
+  roles:
+    - k3s_slave
