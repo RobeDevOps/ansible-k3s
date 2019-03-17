@@ -1,5 +1,5 @@
 ---
-- name: Join node {{ansible_host}} to cluster 
+- name: Join node {{inventory_hostname}}({{ansible_host}}) to cluster 
   debug: 
-    msg: "sudo -E k3s agent -s k3s-master --cluster-secret {{cluster_secret}}"
+    msg: "sudo -E k3s agent -s k3s-master:6443 --cluster-secret {{cluster_secret}}"
 
