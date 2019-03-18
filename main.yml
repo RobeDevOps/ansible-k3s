@@ -1,5 +1,5 @@
 ---
-- hosts: master
+- hosts: master:slave
   gather_facts: yes
   become: yes
   roles:
