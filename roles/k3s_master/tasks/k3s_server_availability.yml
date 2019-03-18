@@ -1,6 +1,7 @@
 ---
 - name: Check master server availability
-  url: https://k3s-master:6443
+  uri:
+    url: https://k3s-master:6443
     method: GET
     status_code: 401
     body_format: json
