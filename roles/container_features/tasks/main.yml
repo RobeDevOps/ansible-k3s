@@ -3,7 +3,7 @@
   shell: cat /boot/cmdline.txt | grep "cgroup_enable=cpuset"
   ignore_errors: yes
   register: cpuset_result
-  changed_when: cpuset_result != 1
+  changed_when: cpuset_result.rc is defined and cpuset_result.rc != 1
 
 - name: Creating new cmdline with cgroup_enable=cpuset 
   shell: >
