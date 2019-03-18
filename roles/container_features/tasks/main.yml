@@ -5,10 +5,6 @@
   register: cpuset_result
   changed_when: cpuset_result.rc is defined and cpuset_result.rc != 0
 
-- name: cgroup value
-  debug:
-    msg: "{{ cpuset_result }}"
-
 - name: Creating new cmdline with cgroup_enable=cpuset 
   shell: >
     echo "$(head -n1 /boot/cmdline.txt) cgroup_enable=cpuset"
@@ -24,6 +20,7 @@
   shell: cat /boot/cmdline.txt | grep "cgroup_enable=memory"
   ignore_errors: yes
   register: memory_result
+  changed_when: memory_result.rc is defined and memory_result.rc != 0
 
 - name: Creating new cmdline with cgroup_enable=memory 
   shell: >
@@ -40,6 +37,7 @@
   shell: cat /boot/cmdline.txt | grep "cgroup_memory=1"
   ignore_errors: yes
   register: memory_one_result
+  changed_when: memory_one_result.rc is defined and memory_one_result.rc != 0
 
 - name: Creating new cmdline with cgroup_memory=1 
   shell: >
