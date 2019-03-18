@@ -1,5 +1,5 @@
 ---
-- hosts: master:slave
+- hosts: master
   gather_facts: yes
   become: yes
   roles:
@@ -14,8 +14,8 @@
   roles:
     - { role: k3s_master, tags: ['master'] } 
 
-- hosts: slave
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: k3s_slave, tags: ['slave'] }
+# - hosts: slave
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: k3s_slave, tags: ['slave'] }
