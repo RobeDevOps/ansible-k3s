@@ -6,4 +6,8 @@
     validate_certs: False
     status_code: 401
     body_format: json
+  register: http_result
+  retries: 6
+  delay: 10
+  until: http_result is not failed
   
