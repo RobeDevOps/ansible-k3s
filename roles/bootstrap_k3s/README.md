@@ -2,6 +2,7 @@ bootstrap_k3s
 =========
 
 This role only download the [k3s binary](https://github.com/rancher/k3s/releases/download/v0.2.0/k3s-armhf) for all the node in the cluster.
+This role is required for all the nodes.
 
 Example Playbook
 ----------------
