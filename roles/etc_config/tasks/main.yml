@@ -1,18 +1,18 @@
 ---
 - name: Configuring /etc/hostname
   become: True
-  template: 
+  template:
     src: hostname.j2
     dest: /etc/hostname
 
 - name: Configuring /etc/hosts
   become: True
-  template: 
+  template:
     src: hosts.j2
     dest: /etc/hosts
 
 - name: Configuring /etc/dhcpcd.conf
   become: True
-  template: 
+  template:
     src: dhcpcd.conf.j2
     dest: /etc/dhcpcd.conf

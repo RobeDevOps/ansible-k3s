@@ -10,4 +10,3 @@
   retries: 6
   delay: 15
   until: http_result is not failed
-  

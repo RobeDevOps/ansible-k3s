@@ -5,31 +5,45 @@
   register: cpuset_result
   changed_when: cpuset_result.rc is defined and cpuset_result.rc != 0
 
-- name: Creating new cmdline with cgroup_enable=cpuset 
-  shell: >
+- name: Creating new cmdline with cgroup_enable=cpuset
+  shell: |
+    set -o pipefail
     echo "$(head -n1 /boot/cmdline.txt) cgroup_enable=cpuset"
+  args:
+    executable: /bin/bash
   register: cmdline_cpuset
-  when: cpuset_result.rc is defined and cpuset_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
+  when: cpuset_result.rc is defined and cpuset_result.rc == 1
 
 - name: Adding cgroup_enable=cpuset to cmdline.txt
-  shell: echo "{{ cmdline_cpuset.stdout }}" | tee /boot/cmdline.txt
+  shell: |
+    set -o pipefail
+    echo "{{ cmdline_cpuset.stdout }}" | tee /boot/cmdline.txt
+  args:
+    executable: /bin/bash
   when: cpuset_result.rc is defined and cpuset_result.rc == 1
   notify: Reboot Pi
-  
+
 - name: Verify cgroup_enable=memory is enable
   shell: cat /boot/cmdline.txt | grep "cgroup_enable=memory"
   ignore_errors: yes
   register: memory_result
   changed_when: memory_result.rc is defined and memory_result.rc != 0
 
-- name: Creating new cmdline with cgroup_enable=memory 
-  shell: >
+- name: Creating new cmdline with cgroup_enable=memory
+  shell: |
+    set -o pipefail
     echo "$(head -n1 /boot/cmdline.txt) cgroup_enable=memory"
+  args:
+    executable: /bin/bash
   register: cmdline_memory
-  when: memory_result.rc is defined and memory_result.rc == 1  # meaning: the grep failed and there is no cgroup_enable 
+  when: memory_result.rc is defined and memory_result.rc == 1
 
 - name: Adding cgroup_enable=memory to cmdline
-  shell: echo "{{ cmdline_memory.stdout }}" | tee /boot/cmdline.txt
+  shell: |
+    set -o pipefail
+    echo "{{ cmdline_memory.stdout }}" | tee /boot/cmdline.txt
+  args:
+    executable: /bin/bash
   when: memory_result.rc is defined and memory_result.rc == 1
   notify: Reboot Pi
 
@@ -39,13 +53,19 @@
   register: memory_one_result
   changed_when: memory_one_result.rc is defined and memory_one_result.rc != 0
 
-- name: Creating new cmdline with cgroup_memory=1 
+- name: Creating new cmdline with cgroup_memory=1
   shell: >
     echo "$(head -n1 /boot/cmdline.txt) cgroup_memory=1"
+  args:
+    executable: /bin/bash
   register: cmdline_memory_one
-  when: memory_one_result.rc is defined and memory_one_result.rc == 1 # meaning: the grep failed and there is no cgroup_enable 
+  when: memory_one_result.rc is defined and memory_one_result.rc == 1
 
 - name: Adding cgroup_memory=1 to cmdline
-  shell: echo "{{ cmdline_memory_one.stdout }}" | tee /boot/cmdline.txt
+  shell: |
+    set -o pipefail
+    echo "{{ cmdline_memory_one.stdout }}" | tee /boot/cmdline.txt
+  args:
+    executable: /bin/bash
   when: memory_one_result.rc is defined and memory_one_result.rc == 1
   notify: Reboot Pi

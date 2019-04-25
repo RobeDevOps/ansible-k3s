@@ -1,0 +1,4 @@
+---
+# How to call this handler from other role.
+- name: Reboot Pi
+  reboot:
