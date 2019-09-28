@@ -4,15 +4,18 @@
   template:
     src: hostname.j2
     dest: /etc/hostname
+  notify: Reboot
 
 - name: Configuring /etc/hosts
   become: True
   template:
     src: hosts.j2
     dest: /etc/hosts
+  notify: Reboot
 
 - name: Configuring /etc/dhcpcd.conf
   become: True
   template:
     src: dhcpcd.conf.j2
     dest: /etc/dhcpcd.conf
+  notify: Reboot

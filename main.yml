@@ -1,21 +1,15 @@
 ---
 - hosts: master:slave
-  gather_facts: yes
   become: yes
   roles:
-    - etc_config
     - container_features
+    - create_user
     - dphys_swapfile
-    - bootstrap_k3s
+    - etc_config
 
-- hosts: master
-  gather_facts: yes
-  become: yes
+- hosts: localhost
   roles:
-    - { role: k3s_master, tags: ['master'] }
-
-- hosts: slave
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: k3s_slave, tags: ['slave'] }
+    - bootstrap_k3sup
+    - k3s_cluster
+  vars_files:
+    - vars/vaultfile.yml

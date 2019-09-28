@@ -2,18 +2,18 @@
 ::1             localhost ip6-localhost ip6-loopback
 ff02::1         ip6-allnodes
 ff02::2         ip6-allrouters
+
 {% for master in groups['master'] %}
 {% if inventory_hostname == master %}
 127.0.0.1       {{master}}
 {% else %}
-{{ hostvars[master]['ansible_eth0']['ipv4']['address'] }}       {{master}}
+{{ hostvars[master]['ansible_default_ipv4']['address'] }}       {{master}}
 {% endif %}
 {% endfor %}
-
 {% for slave in groups['slave'] %}
 {% if inventory_hostname == slave %}
 127.0.0.1       {{slave}}
 {% else %}
-{{ hostvars[slave]['ansible_eth0']['ipv4']['address'] }}       {{slave}}
+{{ hostvars[slave]['ansible_default_ipv4']['address'] }}       {{slave}}
 {% endif %}
 {% endfor %}

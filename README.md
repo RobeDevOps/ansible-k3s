@@ -1,44 +1,45 @@
 # ansible-k3: Kubernetes Lighweight Cluster with Ansible automation
 
-This is a playbook that allows to install and configure all the nodes in the k3s cluster on Raspberry Pi boards.
+This playbook sets up a k3s cluster on Raspberry Pi boards.
 
-This cluster is configuration as follow
+Credits and many thanks to
+- [Rancher](https://rancher.com/) the creators of [k3s](https://k3s.io),
+- [alexellis](https://github.com/alexellis) for [k3sup](https://k3sup.dev/),
+- [RobeDevOps](https://github.com/RobeDevOps) for [ansible-k3s](https://github.com/RobeDevOps/ansible-k3s) which this is a fork of and last, not least
+- [itwars](https://github.com/itwars) for the inspiring [playbook](https://github.com/rancher/k3s/tree/master/contrib/ansible)
+-
+
+This cluster is configured as follows
 
 ![Cluster Design and Ansible workstation](k3s-cluster.jpg)
 
 This configuration is defined in the inventory/hosts.ini file but without the ansible workstation node.
 
-Hardware Components
--------------
-These are the elements I used but any similar components will work.
-
-- Element14 Raspberry Pi 3 B+ Motherboard 
-- Samsung 32GB SD
-- Anker 60W 10-Port USB Wall Charger, PowerPort 10
-- D-Link 5 Port Gigabit Unmanaged Metal Desktop Switch, Plug and Play (DGS-105) 
-- Cable Matters 5-Color Combo Cat6 Ethernet Cable
-- Mini USB Cable - USB 2.0 A Male to Micro B Sync Charge USB Cord – High Speed Micro USB Charger 
-- (Optional) 4 Layers Clear Plate Acrylic Stackable Case for Raspberry Pi 3 Model B+ Case with Fan and Heatsink for Raspberry Pi
-
 SD Flash Tool
 ------------------
-To Flash OS images to SD cards I used [balenaEtcher](https://www.balena.io/etcher/)
+To Flash OS images to SD cards I used [balenaEtcher](https://www.balena.io/etcher/).
+Another way is to use GParted to format an SD-Card and deflate NOOBS archive onto it.
 
 Raspbian image
 ------------------
 Downloaded the [Raspbian Lite Latest](https://downloads.raspberrypi.org/raspbian_lite_latest)
-
+Please have a look at the [Raspbian Documentation](https://github.com/raspberrypi/documentation)
 
 Playbook Details
 =================
-This playbook contains several roles that allows segregation are easy support of the configuration process:
+This playbook consist of roles executing the following main functions:
 
-- Download the k3s-binary and deploy it to every node in the cluster
-- Changes the configuration hostnames and network configuration applying a static ip address.
-- Enables the containers features cpu and memory 
-- Disable the swap service
-- Run k3s server as systemd service on master nodes
-- Run k3s agent join script as systemd service on slave nodes
+- On master and slave systems
+  - When deploying to Raspbian
+    - Enables cgroups 'cpu' + 'memory' in /boot/cmdline.txt
+    - Disable the 'dphys-swapfile' service in systemd
+  - Creates 'k3s' group and user with passwordless sudo and ssh public key login
+  - Changes the configured hostnames and network configuration with static IPv4
+- Only on localhost
+  - Install [k3sup setup](https://get.k3sup.dev) script
+    - Then install [k3sup](https://k3sup.dev) binary
+  - Create [k3s](https://k3s.io) cluster (requires 'cluster_secret' variable)
+  - Configure proper 'kubeconfig' to instantly enable kubectl and k9s ;o)
 
 For more details see the roles README.md files.
 
@@ -51,9 +52,9 @@ The inventory contains all the ip address used on my cluster. In anyone is using
 
 ```
 k3s-master ansible_host=192.168.0.14
-k3s-slave1 ansible_host=192.168.0.13 
-k3s-slave2 ansible_host=192.168.0.10 
-k3s-slave3 ansible_host=192.168.0.12 
+k3s-slave1 ansible_host=192.168.0.13
+k3s-slave2 ansible_host=192.168.0.10
+k3s-slave3 ansible_host=192.168.0.12
 
 [master]
 k3s-master
@@ -87,7 +88,7 @@ Playbook example
   gather_facts: yes
   become: yes
   roles:
-    - { role: k3s_master, tags: ['master'] } 
+    - { role: k3s_master, tags: ['master'] }
 
 - hosts: slave
   gather_facts: yes

@@ -1,5 +1,6 @@
 ---
 - name: Disable dphys-swapfile
+  when: "ansible_lsb.id == 'Raspbian'"
   become: True
   systemd:
     name: dphys-swapfile
