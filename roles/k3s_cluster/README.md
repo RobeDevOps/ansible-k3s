@@ -1,11 +1,16 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+This role creates the [k3s](https://k3s.io) master server, tests for it's API
+availability and then lets all slaves join the cluster. Kickstarting KUBECONFIG
+env variable and kubeconfig file set up at '~/.kube/config' path.
 
 Requirements
 ------------
-cgroup_enable=cpuset cgroup_enable=memory"
+* Container flags cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1
+* Static IPs of master and slaves known to the role
+* Precreated user with passwordless sudo capability
+
 
 Role Variables
 --------------

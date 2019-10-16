@@ -1,0 +1,48 @@
+---
+- name: Check if kubeconfig exists
+  stat:
+    path: "{{playbook_dir}}/kubeconfig"
+  register: kubeconfig_details
+
+- name: Rewrite kubeconfig to IPv4 of first master
+  replace:
+    path: "{{playbook_dir}}/kubeconfig"
+    regexp: '^(.*https://){1}(127.0.0.1|localhost){1}(:6443.*){1}$'
+    replace: '\g<1>{{hostvars[item].ansible_facts.eth0.ipv4.address}}\g<3>'
+  with_items: "{{ groups.master.0 }}"
+  when: kubeconfig_details.stat.exists and kubeconfig_details.stat.isreg
+  register: config_changed
+
+- name: Make sure "~/{{kube_homedir}}/" exists
+  file:
+    path: "{{lookup('env','HOME') + '/' + kube_homedir}}"
+    state: directory
+  when: kubeconfigure
+  register: kubehomedir
+
+- name: Copy kubeconfig to "~/{{kube_homedir}}/{{kube_config}}"
+  copy:
+    src: "{{playbook_dir}}/kubeconfig"
+    dest: "{{lookup('env','HOME') + '/' + kube_homedir + '/' + kube_config}}"
+    force: True
+    backup: True
+  when: kubeconfigure and config_changed is succeeded
+  register: config_imported
+
+- name: Remove kubeconfig
+  file:
+    path: "{{playbook_dir}}/kubeconfig"
+    state: absent
+  when: kubeconfigure and config_imported is succeeded
+
+- name: Insert KUBECONFIG environment in "~/{{kube_envin2}}"
+  lineinfile:
+    regexp: '^(export KUBECONFIG=)(.*)$'
+    line: '\g<1>~/{{kube_homedir}}/{{kube_config}}'
+    path: "{{lookup('env','HOME')}}/{{kube_envin2}}"
+    backrefs: yes
+    backup: yes
+    create: yes
+    state: present
+  when: kubeconfigure and config_imported is succeeded
+  register: alias_created
