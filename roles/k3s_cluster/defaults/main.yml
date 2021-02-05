@@ -1,0 +1,10 @@
+---
+k3s_version: 'v0.8.1'
+debug_master: False
+debug_nodes: False
+
+kubeconfigure: True
+kube_homedir: '.kube'
+kube_config: 'config'
+kube_envin2: '.bash_aliases'
+ssh_key: '~/.ssh/id_rsa'

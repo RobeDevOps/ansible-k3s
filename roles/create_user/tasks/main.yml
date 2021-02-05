@@ -1,0 +1,26 @@
+---
+- name: Create k3s group
+  group:
+    name: "{{k3s_username}}"
+    system: yes
+    state: present
+
+- name: Make k3s group sudoer
+  copy:
+    content: '%{{k3s_username}} ALL=(ALL:ALL) NOPASSWD:ALL'
+    dest: '/etc/sudoers.d/0pw4{{k3s_username}}'
+    mode: 0440
+
+- name: Create k3s user
+  user:
+    name: "{{k3s_username}}"
+    group: "{{k3s_username}}"
+    system: yes
+    password: '!'
+    state: present
+
+- name: Set SSH key
+  authorized_key:
+    user: "{{k3s_username}}"
+    key: "{{ lookup('file', ssh_key + '.pub') }}"
+    state: present

@@ -1,3 +1,0 @@
----
-- import_tasks: k3s_service.yml
-- import_tasks: k3s_server_availability.yml

@@ -1,71 +1,17 @@
 ---
-- name: Verify cgroup_enable=cpuset is enable
-  shell: cat /boot/cmdline.txt | grep "cgroup_enable=cpuset"
-  ignore_errors: yes
-  register: cpuset_result
-  changed_when: cpuset_result.rc is defined and cpuset_result.rc != 0
-
-- name: Creating new cmdline with cgroup_enable=cpuset
-  shell: |
-    set -o pipefail
-    echo "$(head -n1 /boot/cmdline.txt) cgroup_enable=cpuset"
-  args:
-    executable: /bin/bash
-  register: cmdline_cpuset
-  when: cpuset_result.rc is defined and cpuset_result.rc == 1
-
-- name: Adding cgroup_enable=cpuset to cmdline.txt
-  shell: |
-    set -o pipefail
-    echo "{{ cmdline_cpuset.stdout }}" | tee /boot/cmdline.txt
-  args:
-    executable: /bin/bash
-  when: cpuset_result.rc is defined and cpuset_result.rc == 1
-  notify: Reboot Pi
-
-- name: Verify cgroup_enable=memory is enable
-  shell: cat /boot/cmdline.txt | grep "cgroup_enable=memory"
-  ignore_errors: yes
-  register: memory_result
-  changed_when: memory_result.rc is defined and memory_result.rc != 0
-
-- name: Creating new cmdline with cgroup_enable=memory
-  shell: |
-    set -o pipefail
-    echo "$(head -n1 /boot/cmdline.txt) cgroup_enable=memory"
-  args:
-    executable: /bin/bash
-  register: cmdline_memory
-  when: memory_result.rc is defined and memory_result.rc == 1
-
-- name: Adding cgroup_enable=memory to cmdline
-  shell: |
-    set -o pipefail
-    echo "{{ cmdline_memory.stdout }}" | tee /boot/cmdline.txt
-  args:
-    executable: /bin/bash
-  when: memory_result.rc is defined and memory_result.rc == 1
-  notify: Reboot Pi
-
-- name: Verify cgroup_memory=1 is enable
-  shell: cat /boot/cmdline.txt | grep "cgroup_memory=1"
-  ignore_errors: yes
-  register: memory_one_result
-  changed_when: memory_one_result.rc is defined and memory_one_result.rc != 0
-
-- name: Creating new cmdline with cgroup_memory=1
-  shell: >
-    echo "$(head -n1 /boot/cmdline.txt) cgroup_memory=1"
-  args:
-    executable: /bin/bash
-  register: cmdline_memory_one
-  when: memory_one_result.rc is defined and memory_one_result.rc == 1
-
-- name: Adding cgroup_memory=1 to cmdline
-  shell: |
-    set -o pipefail
-    echo "{{ cmdline_memory_one.stdout }}" | tee /boot/cmdline.txt
-  args:
-    executable: /bin/bash
-  when: memory_one_result.rc is defined and memory_one_result.rc == 1
-  notify: Reboot Pi
+- name: Verify cgroup flags are enabled
+  lineinfile:
+    path: /boot/cmdline.txt
+    backrefs: yes
+    state: present
+    regexp: '^(.*) {{item}}(.*)$'
+    backup: yes
+    line: '\g<1> {{item}}\g<2>'
+  with_items:
+    - 'cgroup_enable=cpuset'
+    - 'cgroup_enable=memory'
+    - 'cgroup_memory=1'
+  register: cgroup_flags
+  when: "ansible_lsb.id == 'Raspbian' and ansible_kernel is version('4.6', '>=')"
+  changed_when: cgroup_flags.rc is defined and cgroup_flags.rc != 0
+  notify: Reboot

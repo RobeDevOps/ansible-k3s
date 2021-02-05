@@ -5,7 +5,7 @@ A brief description of the role goes here.
 
 Requirements
 ------------
-cgroup_enable=cpuset cgroup_enable=memory"
+cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1"
 
 Role Variables
 --------------
