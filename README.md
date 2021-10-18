@@ -12,7 +12,7 @@ Hardware Components
 -------------
 These are the elements I used but any similar components will work.
 
-- Element14 Raspberry Pi 3 B+ Motherboard 
+- Raspberry Pi 3 Model B Plus Rev 1.3
 - Samsung 32GB SD
 - Anker 60W 10-Port USB Wall Charger, PowerPort 10
 - D-Link 5 Port Gigabit Unmanaged Metal Desktop Switch, Plug and Play (DGS-105) 
