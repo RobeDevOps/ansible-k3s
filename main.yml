@@ -5,7 +5,7 @@
   roles:
     - etc_config
     - container_features
-    - dphys_swapfile
+    - disable_swap
     - bootstrap_k3s
 
 - hosts: master
