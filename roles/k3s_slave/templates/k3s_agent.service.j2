@@ -6,7 +6,7 @@ After=network.target
 [Service]
 ExecStartPre=-/sbin/modprobe br_netfilter
 ExecStartPre=-/sbin/modprobe overlay
-ExecStart=/usr/local/bin/k3s agent --server https://k3s-master:6443 --cluster-secret {{cluster_secret}}
+ExecStart=/usr/local/bin/k3s agent  --server https://k3s-master:6443 --cluster-secret {{cluster_secret}} --disable traefik --disable metrics-server --disable servicelb -l /var/log/k3s.log
 KillMode=process
 Delegate=yes
 LimitNOFILE=infinity
