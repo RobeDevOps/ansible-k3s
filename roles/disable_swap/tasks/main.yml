@@ -1,3 +1,4 @@
 ---
+# Need to make this idempotent
 - name: Disable swap
   shell: swapoff -a
